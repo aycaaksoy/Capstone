@@ -1,0 +1,53 @@
+﻿@using EntityLayer.Concrete
+@model List<StudentV2>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+<div class="container">
+    @await Html.PartialAsync("DashboardWidgetsPartial")
+
+</div>
+  
+
+<div class="container">
+    <h4>This page will be the admin dashboard</h4>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Student Name</th>
+                <th>Parent</th>
+                <th>Parent Address</th>
+                <th>Parent Phone Number</th>
+                <th>IsActive</th>
+                <th>Description</th>
+                <th>Delete Student</th>
+                <th>Update Student</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.StudentName</td>
+                    <td>@item.ParentName</td>
+                   
+                    <td>@item.ParentAddress</td>
+                    <td>@item.ParentPhoneNumber</td>
+                    <td>@item.IsActive</td>
+                    <td>@item.Description</td>
+                    <td><a href="#" class="btn btn-outline-danger">Delete</a></td>
+                    <td><a href="#" class="btn btn-outline-success">Edit</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+    <div class="btn-group" role="group" >  
+        <a href="/Admin/Home/AddStudent" class="btn btn-outline-dark">Add New Student</a>
+        <a href="/Admin/Home/DownloadStudentsExcel" class="btn btn-outline-success">Download as Excel</a>
+    </div>
+  
+</div>

@@ -1,0 +1,55 @@
+﻿@using EntityLayer.Concrete
+@model List<Announcement>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="container">
+    
+  @await Html.PartialAsync("HeadPartial")
+  <h3 class="text-center">Announcements </h3>
+@foreach(var item in Model)
+{
+    <div class="card shadow mb-4">
+                                <!-- Card Header - Accordion -->
+        <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+            role="button" aria-expanded="true" aria-controls="collapseCardExample">
+         <h6 class="m-0 font-weight-bold text-primary">@item.Title</h6>
+        </a>
+                                <!-- Card Content - Collapse -->
+        <div class="collapse show" id="collapseCardExample">
+            <div class="card-body">
+                <strong>Posted On:</strong> @item.TimePosted
+                <br/>
+                @item.Body
+            </div>
+        </div>
+    </div>
+}
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script>
+ var connection = new signalR.HubConnectionBuilder().withUrl("/userHub").build();
+
+    connection.on("Join", function (count) {
+        document.getElementById("count").innerText = count;
+    });
+
+    connection.on("Leave", function (count) {
+        document.getElementById("count").innerText = count;
+    });
+
+    connection.start().then(function () {
+        connection.invoke("Join");
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    window.onbeforeunload = function () {
+        connection.invoke("Leave");
+    };
+
+</script>
+

@@ -1,0 +1,32 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Capstone.Models
+@using EntityLayer.Concrete
+@model EntityLayer.Concrete.Announcement
+@{
+    ViewData["Title"] = "PostAnnouncement";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+<div class="card shadow mb-4">
+    <div class="card-body">
+    <h1>Post New Announcement</h1>
+<form method="post" action="PostAnnouncement"> 
+    <label>Annoncement Title</label>
+    <input type="text" asp-for="Title" class="form-control" />
+    <span asp-validation-for="Title" class="text-danger"></span>
+    <br />
+
+    <label>Annoncement Content</label>
+    <input type="text" asp-for="Body" class="form-control" />
+    <span asp-validation-for="Body" class="text-danger"></span>
+    <br />
+
+    <label>Annoncement Date Posted</label>
+    <input type="text" asp-for="TimePosted" class="form-control" />
+    <span asp-validation-for="TimePosted" class="text-danger"></span>
+    <br />
+    <div class="text-danger" asp-validation-summary="ModelOnly">
+                                        </div>
+    <button class="btn btn-outline-dark">Submit</button>
+</form>
+</div>
+</div>

@@ -1,0 +1,98 @@
+﻿
+@model List<EntityLayer.Concrete.Announcement>
+@{
+    ViewData["Title"] = "Announcement";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+<div class= "card shadow mb-4">
+    
+                    <div class="card-body">
+                        <div class="card-header py-3">
+                            <h4 > Posted Announcements </h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Body</th>
+                                            <th>TimePosted</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Body</th>
+                                            <th>TimePosted</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                                                                                                                               </tfoot>
+                                    <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                         <tr>
+                                            <td>@item.Title</td>
+                                            <td>@item.Body</td>
+                                            <td>@item.TimePosted</td>
+                                            <td><a href="/Admin/Home/DeleteAnnouncement/@item.PostId" class="btn btn-outline-danger">Delete</a></td>
+                                            <td><a href="/Admin/Home/UpdateAnnouncement/@item.PostId" class="btn btn-outline-warning">Edit</a></td>   
+                                         </tr>  
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                         <a href="/Admin/Home/PostAnnouncement" class="btn btn-outline-dark">Post New Announcement</a>
+                    </div>
+                    
+                       
+                    
+    </div>
+
+
+                                                <!-- Bootstrap core JavaScript-->
+    <script src="~/startbootstrapTemplate/vendor/jquery/jquery.min.js"></script>
+    <script src="~/startbootstrapTemplate/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/startbootstrapTemplate/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/startbootstrapTemplate/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="~/startbootstrapTemplate/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/startbootstrapTemplate/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/startbootstrapTemplate/js/demo/datatables-demo.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script>
+ var connection = new signalR.HubConnectionBuilder().withUrl("/userHub").build();
+
+    connection.on("Join", function (count) {
+        document.getElementById("count").innerText = count;
+    });
+
+    connection.on("Leave", function (count) {
+        document.getElementById("count").innerText = count;
+    });
+
+    connection.start().then(function () {
+        connection.invoke("Join");
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    window.onbeforeunload = function () {
+        connection.invoke("Leave");
+    };
+
+</script>
+

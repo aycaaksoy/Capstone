@@ -1,0 +1,53 @@
+﻿
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@*<h3>Currently logged in users: <span id="userCount">0</span></h3>*@
+
+  <div class="row">
+
+                        <!-- Pending Requests Card Example -->
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Currently Logged in Users:</div>
+                                            <span class="h5 mb-0 font-weight-bold text-gray-800" id="count">0</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script>
+ var connection = new signalR.HubConnectionBuilder().withUrl("/userHub").build();
+
+    connection.on("Join", function (count) {
+        document.getElementById("count").innerText = count;
+    });
+
+    connection.on("Leave", function (count) {
+        document.getElementById("count").innerText = count;
+    });
+
+    connection.start().then(function () {
+        connection.invoke("Join");
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    window.onbeforeunload = function () {
+        connection.invoke("Leave");
+    };
+
+</script>
+
