@@ -35,7 +35,7 @@ namespace BusinessLayer.DIContainer
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMiscellaneousService, MiscellaneousService>();
-            services.AddScoped<GetActiveStudentsHandler>();
+            services.AddScoped<GetActiveStudentsHandlers>();
            
             
         }

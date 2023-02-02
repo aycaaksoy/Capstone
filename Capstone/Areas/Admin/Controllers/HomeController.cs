@@ -14,8 +14,10 @@ using System.IO;
 namespace Capstone.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    
+
+    [AllowAnonymous]
     [Authorize(Roles = "Admin")]
+
     public class HomeController : Controller
     {
        
@@ -29,6 +31,7 @@ namespace Capstone.Areas.Admin.Controllers
             _studentV2Service = studentV2Service;
         }
 
+        [Route("Admin/Home/Dashboard")]
         [HttpGet]
         public IActionResult Dashboard()
         {
@@ -41,6 +44,12 @@ namespace Capstone.Areas.Admin.Controllers
             return PartialView();
         }
 
+        public IActionResult GetActiveStudentPartial()
+        {
+            
+            return PartialView();
+        }
+        [Route("Admin/Home/Announcement")]
         [HttpGet]
         public IActionResult Announcement()
         {
@@ -50,12 +59,12 @@ namespace Capstone.Areas.Admin.Controllers
 
         public IActionResult DeleteAnnouncement(int id)
         {
+           
             var values = _announcementService.TGetById(id);
             _announcementService.TDelete(values);
-            return RedirectToAction(actionName: "Announcement", controllerName: "Home",
-        new { area = "Admin" });
+            return  RedirectToAction("Announcement");
         }
-        
+        [Route("Admin/Home/UpdateAnnouncement/{id}")]
         [HttpGet]
         public IActionResult UpdateAnnouncement(int id)
         {
@@ -73,7 +82,7 @@ namespace Capstone.Areas.Admin.Controllers
             _announcementService.TUpdate(values);
             return RedirectToAction("Announcement");
         }
-
+        [Route("Admin/Home/PostAnnouncement")]
         [HttpGet]
         public IActionResult PostAnnouncement()
         {

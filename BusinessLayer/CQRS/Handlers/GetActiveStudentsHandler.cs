@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.CQRS.Results;
 using BusinessLayer.Handlers.Queries.StudentQueries;
 using DataAccessLayer.Concrete;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.CQRS.Handlers
 {
-    public class GetActiveStudentsHandler
+    public class GetActiveStudentsHandlers
     {
         private readonly Context _context;
 
-        public GetActiveStudentsHandler(Context context)
+        public GetActiveStudentsHandlers(Context context)
         {
             _context = context;
         }
@@ -25,7 +26,7 @@ namespace BusinessLayer.CQRS.Handlers
             {
                 StudentId = x.StudentId,
                 StudentName = x.StudentName,
-                IsActive= x.IsActive,
+                IsActive= x.IsActive.Equals(true),
                 StudentRating= x.StudentRating,
                 Description= x.Description,
                 ParentName= x.ParentName,

@@ -2,14 +2,13 @@
 @model List<StudentV2>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_DefaultLayout.cshtml";
 }
 <div class="container">
     @await Html.PartialAsync("DashboardWidgetsPartial")
 
 </div>
-  
 
 <div class="container">
     <h4>This page will be the admin dashboard</h4>
