@@ -1,0 +1,28 @@
+﻿@using static DTO.ApiDTOs.TeamDTO;
+@model List<TeamMember>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<table>
+    <tr>
+        <th>#</th>
+        <th>Movie Name</th>
+        <th>Rating</th>
+        <th>Year</th>
+        <th>Trailer</th>
+    </tr>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.id</td>
+            <td>@item.joinedTeamAt</td>
+            
+
+            <td><a href="#"> Trailer</a></td>
+        </tr>
+    }
+</table>

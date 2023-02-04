@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.CQRS.Results
 {
-    public class GetActiveStudentsQueryResult
+    public class GetActiveStudentsQueryResult 
     {
         public int StudentId { get; set; }
         public string StudentName { get; set; }

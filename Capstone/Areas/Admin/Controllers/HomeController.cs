@@ -49,6 +49,7 @@ namespace Capstone.Areas.Admin.Controllers
             
             return PartialView();
         }
+
         [Route("Admin/Home/Announcement")]
         [HttpGet]
         public IActionResult Announcement()
@@ -62,8 +63,9 @@ namespace Capstone.Areas.Admin.Controllers
            
             var values = _announcementService.TGetById(id);
             _announcementService.TDelete(values);
-            return  RedirectToAction("Announcement");
+            return RedirectToAction("Announcement");
         }
+
         [Route("Admin/Home/UpdateAnnouncement/{id}")]
         [HttpGet]
         public IActionResult UpdateAnnouncement(int id)
@@ -82,6 +84,7 @@ namespace Capstone.Areas.Admin.Controllers
             _announcementService.TUpdate(values);
             return RedirectToAction("Announcement");
         }
+
         [Route("Admin/Home/PostAnnouncement")]
         [HttpGet]
         public IActionResult PostAnnouncement()
@@ -90,7 +93,6 @@ namespace Capstone.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        
         public IActionResult PostAnnouncement (Announcement announcement)
         {
             AnnouncementValidator annoncementValidator = new AnnouncementValidator();
@@ -98,7 +100,7 @@ namespace Capstone.Areas.Admin.Controllers
             if (result.IsValid)
             {
                 _announcementService.TAdd(announcement);
-                return View();
+                return RedirectToAction("Announcement");
             }
             else
             {
@@ -112,6 +114,7 @@ namespace Capstone.Areas.Admin.Controllers
             return View();
         }
 
+        [Route("Admin/Home/AddStudent")]
         [HttpGet]
         public IActionResult AddStudent() 
         {
@@ -126,7 +129,7 @@ namespace Capstone.Areas.Admin.Controllers
             if (result.IsValid)
             {
                 _studentV2Service.TAdd(student);
-                return View();
+                return RedirectToAction("Dashboard");
             }
             else
             {
@@ -137,6 +140,13 @@ namespace Capstone.Areas.Admin.Controllers
             }
             
             return View();
+        }
+
+        public IActionResult DeleteStudent(int id)
+        {
+            var values = _studentV2Service.TGetById(id);
+            _studentV2Service.TDelete(values);
+            return RedirectToAction("Dashboard");
         }
 
         public IActionResult DownloadStudentsExcel()
