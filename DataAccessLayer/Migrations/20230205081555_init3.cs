@@ -3,10 +3,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccessLayer.Migrations
 {
-    public partial class init : Migration
+    public partial class init3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "announcements",
+                columns: table => new
+                {
+                    PostId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimePosted = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_announcements", x => x.PostId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -61,7 +76,7 @@ namespace DataAccessLayer.Migrations
                     CourseDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CourseIsActive = table.Column<bool>(type: "bit", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LectureTimeDay = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LectureTimeDay = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LectureTimeHours = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LatestAddedStudentDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -71,17 +86,15 @@ namespace DataAccessLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "students",
+                name: "studentsv2",
                 columns: table => new
                 {
                     StudentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StudentName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     StudentRating = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    ParentId = table.Column<int>(type: "int", nullable: false),
                     ParentName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ParentAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ParentIDNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -90,7 +103,7 @@ namespace DataAccessLayer.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_students", x => x.StudentId);
+                    table.PrimaryKey("PK_studentsv2", x => x.StudentId);
                 });
 
             migrationBuilder.CreateTable(
@@ -99,11 +112,10 @@ namespace DataAccessLayer.Migrations
                 {
                     TrainerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TrainerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TrainerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TrainerDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TrainerPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TrainerIsActive = table.Column<bool>(type: "bit", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false)
+                    TrainerPhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TrainerIsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -216,58 +228,6 @@ namespace DataAccessLayer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "studentCourses",
-                columns: table => new
-                {
-                    StudentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentId1 = table.Column<int>(type: "int", nullable: false),
-                    CourseId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_studentCourses", x => x.StudentId);
-                    table.ForeignKey(
-                        name: "FK_studentCourses_courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_studentCourses_students_StudentId1",
-                        column: x => x.StudentId1,
-                        principalTable: "students",
-                        principalColumn: "StudentId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "trainerCourses",
-                columns: table => new
-                {
-                    TrainerId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TrainerId1 = table.Column<int>(type: "int", nullable: false),
-                    CourseId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_trainerCourses", x => x.TrainerId);
-                    table.ForeignKey(
-                        name: "FK_trainerCourses_courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_trainerCourses_trainers_TrainerId1",
-                        column: x => x.TrainerId1,
-                        principalTable: "trainers",
-                        principalColumn: "TrainerId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -306,30 +266,13 @@ namespace DataAccessLayer.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_studentCourses_CourseId",
-                table: "studentCourses",
-                column: "CourseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_studentCourses_StudentId1",
-                table: "studentCourses",
-                column: "StudentId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_trainerCourses_CourseId",
-                table: "trainerCourses",
-                column: "CourseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_trainerCourses_TrainerId1",
-                table: "trainerCourses",
-                column: "TrainerId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "announcements");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -346,25 +289,19 @@ namespace DataAccessLayer.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "studentCourses");
+                name: "courses");
 
             migrationBuilder.DropTable(
-                name: "trainerCourses");
+                name: "studentsv2");
+
+            migrationBuilder.DropTable(
+                name: "trainers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "students");
-
-            migrationBuilder.DropTable(
-                name: "courses");
-
-            migrationBuilder.DropTable(
-                name: "trainers");
         }
     }
 }

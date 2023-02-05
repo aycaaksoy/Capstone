@@ -21,12 +21,12 @@ namespace Capstone.Areas.Admin.Controllers
     public class HomeController : Controller
     {
        
-        private readonly IStudentService _studentService;
+        
         private readonly IStudentV2Service _studentV2Service;
         private readonly IAnnouncementService _announcementService;
-        public HomeController( IStudentService studentService, IAnnouncementService announcementService, IStudentV2Service studentV2Service)
+        public HomeController(  IAnnouncementService announcementService, IStudentV2Service studentV2Service)
         {
-            _studentService = studentService;
+           
             _announcementService = announcementService;
             _studentV2Service = studentV2Service;
         }
@@ -159,12 +159,12 @@ namespace Capstone.Areas.Admin.Controllers
                 workSheet.Cell(1, 3).Value = "IsActive";
                 workSheet.Cell(1, 4).Value = "StudentRating";
                 workSheet.Cell(1, 5).Value = "Description";
-                workSheet.Cell(1, 6).Value = "UserID";
-                workSheet.Cell(1, 7).Value = "ParentName";
-                workSheet.Cell(1, 8).Value = "ParentAddress";
-                workSheet.Cell(1, 9).Value = "ParentIDNumber";
-                workSheet.Cell(1, 10).Value = "ParentPhoneNumber";
-                workSheet.Cell(1, 11).Value = "ParentEmail";
+               
+                workSheet.Cell(1, 6).Value = "ParentName";
+                workSheet.Cell(1, 7).Value = "ParentAddress";
+                workSheet.Cell(1, 8).Value = "ParentIDNumber";
+                workSheet.Cell(1, 9).Value = "ParentPhoneNumber";
+                workSheet.Cell(1, 10).Value = "ParentEmail";
 
                 int rowCount = 2;
                 var StudentList = _studentV2Service.StudentList();
@@ -175,12 +175,12 @@ namespace Capstone.Areas.Admin.Controllers
                     workSheet.Cell(rowCount, 3).Value = item.IsActive;
                     workSheet.Cell(rowCount, 4).Value = item.StudentRating;
                     workSheet.Cell(rowCount, 5).Value = item.Description;
-                    workSheet.Cell(rowCount, 6).Value = item.UserID;
-                    workSheet.Cell(rowCount, 7).Value = item.ParentName;
-                    workSheet.Cell(rowCount, 8).Value = item.ParentAddress;
-                    workSheet.Cell(rowCount, 9).Value = item.ParentIDNumber;
-                    workSheet.Cell(rowCount, 10).Value = item.ParentPhoneNumber;
-                    workSheet.Cell(rowCount, 11).Value = item.ParentEmail;
+                   
+                    workSheet.Cell(rowCount, 6).Value = item.ParentName;
+                    workSheet.Cell(rowCount, 7).Value = item.ParentAddress;
+                    workSheet.Cell(rowCount, 8).Value = item.ParentIDNumber;
+                    workSheet.Cell(rowCount, 9).Value = item.ParentPhoneNumber;
+                    workSheet.Cell(rowCount, 10).Value = item.ParentEmail;
                     rowCount++;
                 }
                 using(var stream = new MemoryStream())

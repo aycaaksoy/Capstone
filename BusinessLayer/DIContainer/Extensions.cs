@@ -4,6 +4,7 @@ using BusinessLayer.CQRS.Handlers;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using DTO.AppUserDTOs;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,8 +21,7 @@ namespace BusinessLayer.DIContainer
         
         public static void ContainerDependencies(this IServiceCollection services)
         {
-            services.AddScoped<IStudentService, StudentService>();
-            services.AddScoped<IStudentDal,EFStudentDal>();
+            
 
             services.AddScoped<IStudentV2Service, StudentV2Service>();
             services.AddScoped<IStudentV2Dal, EFStudentV2Dal>();
@@ -35,9 +35,9 @@ namespace BusinessLayer.DIContainer
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMiscellaneousService, MiscellaneousService>();
-            //services.AddScoped<GetActiveStudentsHandlers>();
-           
-            
+            //services.AddScoped<ActiveStudentCountQueryHandler>();
+            services.AddMediatR(typeof(ActiveStudentCountQueryHandler).Assembly);
+
         }
     }
 }

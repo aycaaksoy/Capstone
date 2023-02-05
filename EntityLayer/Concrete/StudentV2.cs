@@ -18,9 +18,7 @@ namespace EntityLayer.Concrete
 
         public string Description { get; set; }
 
-        public ICollection<StudentCourse> StudentCourses { get; set; } = new List<StudentCourse>();
-
-        public int UserID { get; set; }
+       
         public string ParentName { get; set; }
         public string ParentAddress { get; set; }
 

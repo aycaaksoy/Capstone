@@ -58,7 +58,7 @@ namespace BusinessLayer.Concrete
                     IsActive = x.IsActive,
                     StudentRating = x.StudentRating,
                     Description = x.Description,
-                    UserID = x.UserID,
+                   
                     ParentName = x.ParentName,
                     ParentAddress = x.ParentAddress,
                     ParentIDNumber = x.ParentIDNumber,

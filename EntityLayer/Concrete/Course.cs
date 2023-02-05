@@ -16,15 +16,13 @@ namespace EntityLayer.Concrete
         public string CourseDescription { get; set; }
         public bool CourseIsActive { get; set; }
 
-        [Required]
         public DateTime DateCreated { get; set; }
 
-        [Required]
-        public DateTime LectureTimeDay { get; set; }
+        public String LectureTimeDay { get; set; }
         public DateTime LectureTimeHours { get; set; }
         public DateTime LatestAddedStudentDate { get; set; }
 
-        public ICollection<StudentCourse> StudentCourse { get; set; } = new List<StudentCourse>();
-        public ICollection<TrainerCourse> TrainerCourse { get; set; } = new List<TrainerCourse>();
+        
+ 
     }
 }
