@@ -3,8 +3,11 @@ using BusinessLayer.Concrete;
 using BusinessLayer.CQRS.Handlers;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
+using DataAccessLayer.Repository;
+using DataAccessLayer.UnitOfWork;
 using DTO.AppUserDTOs;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +40,7 @@ namespace BusinessLayer.DIContainer
             services.AddScoped<IMiscellaneousService, MiscellaneousService>();
             //services.AddScoped<ActiveStudentCountQueryHandler>();
             services.AddMediatR(typeof(ActiveStudentCountQueryHandler).Assembly);
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         }
     }

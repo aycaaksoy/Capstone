@@ -23,5 +23,7 @@ namespace DataAccessLayer.Concrete
         public DbSet<Course> courses { get; set; }
         
         public DbSet<Announcement> announcements { get; set; }
+        public DbSet<Game> games { get; set; }
     }
 }
+                    

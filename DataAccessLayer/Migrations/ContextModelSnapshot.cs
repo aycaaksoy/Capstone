@@ -178,6 +178,27 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("courses");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.Game", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Approved")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PGN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("games");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.StudentV2", b =>
                 {
                     b.Property<int>("StudentId")

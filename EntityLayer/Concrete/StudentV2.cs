@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
+
     public class StudentV2
     {
         [Key]

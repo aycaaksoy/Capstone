@@ -1,6 +1,13 @@
+using AutoMapper;
+using DataAccessLayer.Repository;
+using DataAccessLayer.UnitOfWork;
+using DTO;
+using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,12 +33,17 @@ namespace APILayer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-
+            services.AddUnitOfWork(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "APILayer", Version = "v1" });
             });
+            //services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //services.AddScoped<IMapper, Mapper>();
+            //services.AddScoped<IGameRepository, GameRepository>();
+            services.AddAutoMapper(typeof(Startup));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +68,24 @@ namespace APILayer
             {
                 endpoints.MapControllers();
             });
+        }
+    }
+    public static class ServiceCollectionExtensions
+    {
+        public static IServiceCollection AddUnitOfWork(this IServiceCollection services, IConfiguration configuration)
+        {
+            string connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            // Register DbContext
+            services.AddDbContext<IdentityDbContext>(options =>
+                options.UseSqlServer(connectionString));
+
+            // Register other repositories as needed
+
+            // Register UnitOfWork
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IGameRepository, GameRepository>();
+            return services;
         }
     }
 }

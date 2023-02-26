@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 namespace EntityLayer.Concrete
 {
 
-    public class Announcement
+    public class Game
     {
         [Key]
-        public int PostId { get; set; }
-        public string Title { get; set; }
-        public string Body { get; set; }
-        public DateTime TimePosted { get; set; }
+      
+        public int Id { get; set; }
+        public string PGN { get; set; }
+        public string username { get; set; }
+        public bool Approved { get; set; }
     }
 }

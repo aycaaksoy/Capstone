@@ -2,6 +2,8 @@
 using BusinessLayer.DIContainer;
 using BusinessLayer.Hubs;
 using DataAccessLayer.Concrete;
+using DataAccessLayer.Repository;
+using DataAccessLayer.UnitOfWork;
 using DTO.AppUserDTOs;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -10,8 +12,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -37,6 +41,8 @@ namespace Capstone
         {
             services.AddCors();
             services.AddDbContext<Context>();
+            services.AddDbContext<IdentityDbContext>(options =>
+    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders(); 
@@ -71,9 +77,9 @@ namespace Capstone
                 .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
-            
 
-
+           
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,4 +122,5 @@ namespace Capstone
             });
         }
     }
+
 }
